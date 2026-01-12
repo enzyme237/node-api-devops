@@ -1,0 +1,31 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-error.log*
+
+# Environnement
+.env
+.env.*
+
+# Docker
+*.log
+docker-compose.override.yml
+
+# Jenkins
+jenkins_home/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Certificats (IMPORTANT)
+*.pem
+*.crt
+*.key
+
+# Ansible (plus tard)
+*.retry
+
+# IDE
+.vscode/
+.idea/
