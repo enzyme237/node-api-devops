@@ -1,0 +1,22 @@
+
+
+services:
+  node:
+    build: .
+    container_name: node-api
+    expose:
+      - "3000"
+    environment:
+      - PORT=3000
+
+  haproxy:
+    image: haproxy:2.9
+    container_name: haproxy
+    ports:
+      - "8443:443"   # mappe HTTPS sur 8443 local 
+    volumes:
+      - ./haproxy/haproxy.cfg:/usr/local/etc/haproxy/haproxy.cfg:ro
+      - ./haproxy/haproxy.pem:/usr/local/etc/haproxy/haproxy.pem:ro
+    depends_on:
+      - node
+
