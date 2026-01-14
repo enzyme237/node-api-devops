@@ -17,35 +17,38 @@ pipeline {
             }
         }
 
-        stage('Basic test') {
+        stage('Lint') {
             steps {
-                echo '🧪 Test simple : vérification du lancement Node'
-                sh 'node -e "console.log(\'Node fonctionne\')"'
+                echo '🧹 Vérification du code avec ESLint (optionnel)'
+                // si tu n'as pas eslint configuré, commente la ligne suivante
+               // sh 'npx eslint . || echo "Lint skipped (no ESLint configured)"'
+            }
+        }
+
+        stage('Run tests') {
+            steps {
+                echo '🧪 Exécution des tests unitaires'
+                // npm test doit exister dans package.json
+                sh 'npm test || exit 1'
             }
         }
 
         stage('Sanity check') {
             steps {
-                echo '🔍 Vérification des versions'
+                echo '🔍 Vérification de l’environnement Node/NPM'
                 sh 'node -v'
                 sh 'npm -v'
             }
         }
 
-        stage('Failure demo (volontaire)') {
-            steps {
-                echo '❌ Échec volontaire pour comprendre un build rouge'
-                sh 'exit 1'
-            }
-        }
     }
 
     post {
         success {
-            echo '✅ Pipeline CI réussi'
+            echo '✅ Pipeline CI réussi ! Tout est OK'
         }
         failure {
-            echo '🚨 Pipeline CI en échec (c’est volontaire ici)'
+            echo '🚨 Pipeline CI échoué ! Vérifie les logs'
         }
     }
 }
